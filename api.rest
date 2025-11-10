@@ -1,0 +1,40 @@
+GET http://localhost:3000/data
+###
+GET http://localhost:3000/
+###
+GET http://localhost:3000/index
+###
+POST http://localhost:3000/data
+Content-Type: application/json
+
+{
+    "forname":"S",
+    "surname":"B"
+}
+
+###
+GET http://localhost:3000/data
+###
+DELETE http://localhost:3000/data/3
+###
+POST http://localhost:3000/data/search
+Content-Type: application/json
+
+{
+    "forename": "Tim"
+}
+###
+PUT http://localhost:3000/data/1
+Content-Type: application/json
+
+{
+    "forename":"Greg",
+    "surname":"Jannings"
+}
+###
+POST http://localhost:3000/data/search
+Content-Type: application/json
+
+{
+    "forename": "Roy"
+}
