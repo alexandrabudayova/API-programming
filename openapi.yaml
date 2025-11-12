@@ -1,0 +1,190 @@
+openapi: 3.0.3
+info:
+  title: Users API
+  version: 1.0.0
+  description: CRUD and search API for managing users.
+
+servers:
+  - url: http://localhost:3000
+    description: Local development server
+
+paths:
+  /:
+    get:
+      summary: Home page
+      operationId: getHome
+      responses:
+        '200':
+          description: Returns a welcome message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  hello:
+                    type: string
+                    example: Hello World!
+
+  /index:
+    get:
+      summary: Index page
+      operationId: getIndex
+      responses:
+        '200':
+          description: Returns the index page message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  home:
+                    type: string
+                    example: Home page
+
+  /data:
+    get:
+      summary: Get all users
+      operationId: getUsers
+      responses:
+        '200':
+          description: List of all users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+    post:
+      summary: Create a new user
+      operationId: createUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInput'
+      responses:
+        '201':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '415':
+          description: Unsupported Media Type
+
+  /data/{id}:
+    put:
+      summary: Update an existing user or create if not found
+      operationId: updateOrCreateUser
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInput'
+      responses:
+        '200':
+          description: User updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '201':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '415':
+          description: Unsupported Media Type
+
+    delete:
+      summary: Delete a user by ID
+      operationId: deleteUser
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: User deleted successfully
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Item with ID 1 deleted
+        '404':
+          description: User not found
+
+  /data/search:
+    post:
+      summary: Search for users by forename
+      operationId: searchUsers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - forename
+              properties:
+                forename:
+                  type: string
+                  example: Tim
+      responses:
+        '200':
+          description: List of matching users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserOutput'
+        '404':
+          description: User not found
+        '415':
+          description: Unsupported Media Type
+
+components:
+  schemas:
+    UserInput:
+      type: object
+      required:
+        - forename
+        - surname
+      properties:
+        forename:
+          type: string
+          example: Tim
+        surname:
+          type: string
+          example: Berners-Lee
+
+    User:
+      allOf:
+        - $ref: '#/components/schemas/UserInput'
+        - type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+
+    UserOutput:
+      type: object
+      properties:
+        forename:
+          type: string
+          example: Tim
+        surname:
+          type: string
+          example: Berners-Lee
