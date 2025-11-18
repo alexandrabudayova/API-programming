@@ -9,6 +9,7 @@ import dataRoute from './routes/data.js';
 import homeRoute from './routes/home.js';
 import loginRoute from  './routes/login.js'
 import {verifyToken} from './verifytoken.js'
+import {rateLimiter} from './ratelimiter.js'
 
 app.use(express.json());
 
@@ -17,7 +18,7 @@ app.use(express.json());
 const swaggerDocument = YAML.load('./openapi.yaml');
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/',homeRoute);
-app.use('/data',verifyToken,dataRoute);
+app.use('/data',verifyToken,rateLimiter,dataRoute);
 app.use('/index',indexRoute);
 app.use('/login',loginRoute)
 

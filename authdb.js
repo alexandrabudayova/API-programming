@@ -1,7 +1,8 @@
 let authUsers = [
     {
       "username": "SASHA",
-      "password": "HHJJKK"
+      "password": "HHJJKK",
+      rateLimiting: { window: 0, requestCounter: 0}
     }
   ]
 
