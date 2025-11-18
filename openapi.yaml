@@ -154,6 +154,39 @@ paths:
           description: User not found
         '415':
           description: Unsupported Media Type
+# NEW added login documentation
+  /login:
+    post:
+      summary: Login by using username and password
+      operationId: loginUsers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - username
+                - password
+              properties:
+                username:
+                  type: string
+                  example: TIMB
+                forename:
+                  type: string
+                  example: XXXX
+      responses:
+        '200':
+          description: List of login username, token, type of token and its duration 
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LoginOutput'
+        '401':
+          description: Login failed
+
 
 components:
   schemas:
@@ -188,3 +221,19 @@ components:
         surname:
           type: string
           example: Berners-Lee
+
+    LoginOutput:
+      type: object
+      properties:
+        username:
+          type: string
+          example: TIMB
+        access_token:
+          type: string
+          example: NFAJNFJFJANFJNADFAJFNJADNFNFAND
+        token_type: 
+          type: string
+          example: Bearer
+        expires_in:
+          type: string
+          example: 3h

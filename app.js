@@ -7,6 +7,8 @@ const app = express();
 import indexRoute from './routes/index.js';
 import dataRoute from './routes/data.js';
 import homeRoute from './routes/home.js';
+import loginRoute from  './routes/login.js'
+import {verifyToken} from './verifytoken.js'
 
 app.use(express.json());
 
@@ -15,8 +17,9 @@ app.use(express.json());
 const swaggerDocument = YAML.load('./openapi.yaml');
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/',homeRoute);
-app.use('/data',dataRoute);
+app.use('/data',verifyToken,dataRoute);
 app.use('/index',indexRoute);
+app.use('/login',loginRoute)
 
 app.listen(3000,() => {
     console.log('Listening on port 3000...')

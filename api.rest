@@ -24,7 +24,7 @@ Content-Type: application/json
     "forename": "Tim"
 }
 ###
-PUT http://localhost:3000/data/1
+PUT http://localhost:3000/data/5
 Content-Type: application/json
 
 {
@@ -38,3 +38,26 @@ Content-Type: application/json
 {
     "forename": "Roy"
 }
+###
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+      "username": "SASHA",
+      "password": "HHJJKK"
+}
+
+###
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+      "username": "s",
+      "password": "H"
+}
+
+
+###
+GET http://localhost:3000/data
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlNBU0hBIiwiaWF0IjoxNzYzNDY4OTc1LCJleHAiOjE3NjM0NzYxNzV9.3ULZOwfOnTNzBPkbNlgpIiWvKGEjQ8mb0HLfQE-ickM
+Accept: application/json

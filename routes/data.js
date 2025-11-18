@@ -9,6 +9,7 @@ router.get('/', (req, res) => {
   res.status(200).json(data);
 });
 
+
 router.post('/', (req, res) => {
   if (req.headers['content-type'] !== 'application/json') {
     return res.status(415).send('Unsupported Media Type');
